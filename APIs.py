@@ -11,7 +11,7 @@ prompt.pack(pady=10)
 entry = tk.Entry(window, font=("Arial", 14), width=30)
 entry.pack(pady=5) """
 
-def Hello_World():
+""" def Hello_World():
     print("Hello World!!!")
     window = tk.Tk()
     coolbutton = tk.Button(window)
@@ -23,4 +23,8 @@ def Hello_World():
     height=2
     relief="raised"
     coolbutton.pack(pady=20)
-    window.mainloop()
+    window.mainloop() """
+
+curl -X POST "https://accounts.spotify.com/api/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "grant_type=client_credentials&client_id=your-client-id&client_secret=your-client-secret"
