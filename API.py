@@ -21,7 +21,7 @@ print(pokemon) """
 import requests
 
 def getJoke(joke):
-    response = requests.get('https://geek-jokes.sameerkumar.website/api?format=json')
+    response = requests.get(f"https://geek-jokes.sameerkumar.website/api?format=json")
     if response.status_code != 200:
         print("Error fetching joke!")
         return None
