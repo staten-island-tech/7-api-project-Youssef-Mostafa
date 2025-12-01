@@ -20,14 +20,10 @@ print(pokemon) """
 
 import requests
 
-def getJoke(joke):
-    response = requests.get(f"https://geek-jokes.sameerkumar.website/api?format=json")
-    if response.status_code != 200:
-        print("Error fetching joke!")
-        return None
-    
-    data = response.json()
+def comic(input): 
+    word = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{input}")
+    dictionary = word.json()
+    print(dict(dictionary))
 
-ChuckN = getJoke("Joke")
-print(ChuckN)
+    
 
