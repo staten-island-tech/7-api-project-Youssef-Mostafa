@@ -26,13 +26,12 @@ import requests
 
 window = tk.Tk()
 window.title("DEFINITION FINDER")
-window.geometry("1000x1000")
+window.geometry("1000x800")
 window.resizable(False, False)
 input = tk.Label(window, text = "Write a word to search for a definition:")
 input.pack(pady = 10)
-
-
-
+window.configure(bg="black")
+window.attributes("-alpha", 0.8)
 
 
 window.mainloop()
