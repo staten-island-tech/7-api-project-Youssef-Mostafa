@@ -23,19 +23,6 @@ print(pokemon) """
 import tkinter as tk
 import requests
 
-
-window = tk.Tk()
-window.title("DEFINITION FINDER")
-window.geometry("1000x800")
-window.resizable(False, False)
-input = tk.Label(window, text = "Write a word to search for a definition:")
-input.pack(pady = 10)
-window.configure(bg="black")
-window.attributes("-alpha", 0.8)
-
-
-window.mainloop()
-
 def words(input): 
     word = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{input}")
     dictionary = word.json()
@@ -43,6 +30,36 @@ def words(input):
     definition = entry["meanings"][0]["definitions"][0]["definition"]
     print(definition)
 words("yell")
+
+
+window = tk.Tk()
+window.title("DEFINITION FINDER")
+window.geometry("1000x800")
+window.resizable(False, False)
+window.configure(bg="black")
+window.attributes("-alpha", 0.8)
+
+Word_search = tk.Label(window, text = "Write a word to search for a definition:", font=("Times New Roman", 25))
+Word_search.pack(pady = 10)
+
+entry = tk.Entry(window, font=("Comic Sans MS", 20), width=30)
+entry.pack(pady=5)
+
+
+my_button = tk.Button(window, text="Search Word",)
+command=words
+font=("Arial", 16)
+bg="lightblue"
+fg="black"
+relief="raised"
+padx=10, pady=5
+my_button.pack(pady=20)
+
+
+
+window.mainloop()
+
+
 
 
 
