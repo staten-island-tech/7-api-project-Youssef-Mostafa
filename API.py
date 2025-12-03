@@ -18,7 +18,7 @@ pokemon = getPoke("Bulbasaur")
 print(pokemon) """
 
 
-# API Project
+# API Project: Word Guesser Game
 
 
 import tkinter as tk
@@ -36,12 +36,12 @@ bg="white",
 fg="black")
 Word_search.pack(pady=10)
 
-entry = tk.Entry(window, font=("Comic Sans MS", 20), width=30)
+entry = tk.Entry(window, font=("Comic Sans MS", 20), width=30, bg="lightblue")
 entry.pack(pady=5)
 
-output_label = tk.Label(window, text="", font=("Times New Roman", 20),
-bg="black",
-fg="lightgreen",
+output_label = tk.Label(window, text="", font=("Comic Sans MS", 20),
+bg="white",
+fg="lightblue",
 wraplength=900)
 output_label.pack(pady=20)
 
