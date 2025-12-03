@@ -20,42 +20,47 @@ print(pokemon) """
 
 # API Project
 
+
 import tkinter as tk
 import requests
-
-def words(input): 
-    word = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{input}")
-    dictionary = word.json()
-    entry = dictionary[0]
-    definition = entry["meanings"][0]["definitions"][0]["definition"]
-    print(definition)
-words("yell")
-
 
 window = tk.Tk()
 window.title("DEFINITION FINDER")
 window.geometry("1000x800")
 window.resizable(False, False)
-window.configure(bg="black")
-window.attributes("-alpha", 0.8)
+window.configure(bg="white")
 
-Word_search = tk.Label(window, text = "Write a word to search for a definition:", font=("Times New Roman", 25))
-Word_search.pack(pady = 10)
+Word_search = tk.Label(window, text="Write a word to search for a definition:",
+font=("Times New Roman", 25),
+bg="white",
+fg="black")
+Word_search.pack(pady=10)
 
 entry = tk.Entry(window, font=("Comic Sans MS", 20), width=30)
 entry.pack(pady=5)
 
+output_label = tk.Label(window, text="", font=("Times New Roman", 20),
+bg="black",
+fg="lightgreen",
+wraplength=900)
+output_label.pack(pady=20)
 
-my_button = tk.Button(window, text="Search Word",)
-command=words
-font=("Arial", 16)
-bg="lightblue"
-fg="black"
-relief="raised"
-padx=10, pady=5
-my_button.pack(pady=20)
+def get_definition():
+    word_to_search = entry.get()
+    try:
+        response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word_to_search}")
+        data = response.json()
+        definition = data[0]["meanings"][0]["definitions"][0]["definition"]
+        print(definition)
+        output_label.config(text=definition)
+    except Exception as e:
+        output_label.config(text="Word not found.")
+        print("Error:", e)
 
-
+my_button = tk.Button(window, text="Search Word", font=("Times New Roman", 20),
+bg="lightblue", fg="black", relief="raised",
+command=get_definition)
+my_button.pack(pady=25)
 
 window.mainloop()
 
