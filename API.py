@@ -25,10 +25,10 @@ import tkinter as tk
 import requests
 
 window = tk.Tk()
-window.title("DEFINITION FINDER")
+window.title("WORD GUESSING GAME")
 window.geometry("1000x800")
 window.resizable(False, False)
-window.configure(bg="white")
+window.configure(bg="white") hhhhh
 
 Word_search = tk.Label(window, text="Write a word to search for a definition:",
 font=("Times New Roman", 25),
