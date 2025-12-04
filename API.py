@@ -28,7 +28,7 @@ window = tk.Tk()
 window.title("WORD GUESSING GAME")
 window.geometry("1000x800")
 window.resizable(False, False)
-window.configure(bg="white") hhhhh
+window.configure(bg="white")
 
 Word_search = tk.Label(window, text="Write a word to search for a definition:",
 font=("Times New Roman", 25),
