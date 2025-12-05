@@ -109,5 +109,14 @@ bg="lightblue", fg="black", relief="raised",
 command=get_definition)
 my_button.pack(pady=25)
 
+def randomwordfinder():
+    response2 = requests.get(f"https://random-word-api.herokuapp.com/word")
+    data2 = response2.json()
+    randomword = data2
+    print(randomword)
+
+
+
+
 window.mainloop()
 
