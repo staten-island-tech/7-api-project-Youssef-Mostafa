@@ -72,12 +72,12 @@ import tkinter as tk
 import requests
 
 window = tk.Tk()
-window.title("DEFINITION FINDER")
+window.title("GUESS THAT WORD!!!")
 window.geometry("1000x800")
 window.resizable(False, False)
 window.configure(bg="white")
 
-Word_search = tk.Label(window, text="Write a word to search for a definition:",
+Word_search = tk.Label(window, text="Guess the word in the box below:",
 font=("Times New Roman", 25),
 bg="white",
 fg="black")
@@ -104,16 +104,22 @@ def get_definition():
         output_label.config(text="Word not found. Please try another word.")
         print("Error:", e)
 
-my_button = tk.Button(window, text="Search Word", font=("Times New Roman", 20),
+my_button = tk.Button(window, text="Guess Word", font=("Times New Roman", 20),
 bg="lightblue", fg="black", relief="raised",
 command=get_definition)
 my_button.pack(pady=25)
 
 def randomwordfinder():
-    response2 = requests.get(f"https://random-word-api.herokuapp.com/word")
-    data2 = response2.json()
-    randomword = data2
-    print(randomword)
+    url = "https://random-word-api.herokuapp.com/word"
+    try:
+        response2 = requests.get(url)
+        data2 = response2.json()
+        randomword = data2[0]
+        print(randomword)
+    except Exception as e:
+        print("Error fetching random word:", e)
+        return None
+randomwordfinder()
 
 
 
