@@ -69,7 +69,13 @@ window.mainloop() """
 # API Project Part 2: Word Guessing Game
 
 import tkinter as tk
+from tkinter import messagebox   #creates little windows for errors
+from PIL import Image, ImageTk   #trying to fetch images from seperate API
 import requests
+import io #uploads and stores images im memory
+
+
+
 
 window = tk.Tk()
 window.title("GUESS THAT WORD!!!")
