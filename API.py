@@ -74,7 +74,7 @@ import tkinter as tk
 from tkinter import messagebox   #creates little windows for errors/ experimental code suggested by ChatGPT
 from PIL import Image, ImageTk   #Pillow - built in import trying to fetch images
 import requests
-import io #uploads and stores images im memory/database compliments pillow and
+import io #uploads and stores images im memory/database compliments pillow and  
 
 
 # Window elements
