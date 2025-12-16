@@ -83,14 +83,14 @@ window = tk.Tk()
 window.title("GUESS THAT WORD!!!")
 window.geometry("1000x800")
 window.resizable(False, False)
-window.configure(bg="white")
+window.configure(bg="steelblue")
 
 # Text for game
 
 Word_search = tk.Label(window, text="Guess the word in the box below:",
 font=("Times New Roman", 25),
-bg="white",
-fg="black")
+bg="steelblue",
+fg="lightblue")
 Word_search.pack(pady=10)
 
 # Input or where the word is guessed
@@ -101,7 +101,7 @@ entry.pack(pady=5)
 # Where the final answer is printed
 
 output_label = tk.Label(window, text="", font=("Comic Sans MS", 20),
-bg="white",
+bg="steelblue",
 fg="lightblue",
 wraplength=900,
 justify = "left")
@@ -109,7 +109,7 @@ output_label.pack(pady=20)
 
 # Image for the random word
 
-image_label = tk.Label(window, bg="white")
+image_label = tk.Label(window, bg="steelblue")
 image_label.pack(pady=10)
 
 # Gets the definition, meaning, synonym, and antonym of a random word
@@ -121,26 +121,8 @@ def get_definition():
         data = response.json()
         meanings = data[0]["meanings"]
         definition = meanings[0]["definitions"][0].get("definition", "No definition found.")
-        synonyms = meanings[0].get("synonyms", [])
-        antonyms = meanings[0].get("antonyms", [])
-        return {
-            "definition": definition,
-            "synonyms": synonyms[:8],
-            "antonyms": antonyms[:8]}
     except Exception:
         return None
-    
-# Gets images for the random word
-
-def fetch_image(word):
-    try:
-        image_url = f"https://source.unsplash.com/600x400/?{word}"
-        img_data = requests.get(image_url, timeout=5).content
-        img = Image.open(io.BytesIO(img_data))
-        return img
-    except Exception:
-        return None
-
 
 # Button to click to accept input and print the definition
 
