@@ -87,7 +87,7 @@ window.configure(bg="steelblue")
 
 # Text for game
 
-Word_search = tk.Label(window, text="Guess the word in the box below:",
+Word_search = tk.Label(window, text="Guess the hidden word!:",
 font=("Times New Roman", 25),
 bg="steelblue",
 fg="lightblue")
@@ -129,7 +129,7 @@ def get_definition():
 my_button = tk.Button(window, text="Guess Word", font=("Times New Roman", 20),
 bg="lightblue", fg="black", relief="raised",
 command=get_definition)
-my_button.pack(pady=25)
+my_button.pack(pady=25) 
 
 # Finds a random word on sepearate API
 
