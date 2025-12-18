@@ -72,10 +72,11 @@ window.mainloop() """
 
 import tkinter as tk
 from tkinter import messagebox   #creates little windows for errors/ experimental code suggested by ChatGPT
-from PIL import Image, ImageTk   #Pillow - built in import trying to fetch images
 import requests
-import io #uploads and stores images im memory/database compliments pillow and  
 
+current_word = ""
+hint_index = 0
+current_info = {}
 
 # Window elements
 
@@ -85,44 +86,86 @@ window.geometry("1000x800")
 window.resizable(False, False)
 window.configure(bg="steelblue")
 
-# Text for game
+# Ui and text for game
 
-Word_search = tk.Label(window, text="Guess the hidden word!:",
+Word_search = tk.Label(
+window, 
+text="Guess the hidden word!:",
 font=("Times New Roman", 25),
 bg="steelblue",
 fg="lightblue")
 Word_search.pack(pady=10)
 
-# Input or where the word is guessed
-
-entry = tk.Entry(window, font=("Comic Sans MS", 20), width=30, bg="lightblue")
+entry = tk.Entry(
+window, 
+font=("Comic Sans MS", 20), 
+width=30, 
+bg="lightblue")
 entry.pack(pady=5)
 
-# Where the final answer is printed
-
-output_label = tk.Label(window, text="", font=("Comic Sans MS", 20),
+output_label = tk.Label(
+window, 
+text="", 
+font=("Comic Sans MS", 16),
 bg="steelblue",
 fg="lightblue",
 wraplength=900,
 justify = "left")
 output_label.pack(pady=20)
 
-# Image for the random word
+hint_label = tk.Label(
+window, 
+text="", 
+font=("Comic Sans MS", 18), 
+bg ="steelblue", 
+fg="blue")
+hint_label.pack(pady=5)
 
-image_label = tk.Label(window, bg="steelblue")
-image_label.pack(pady=10)
+clue_label = tk.Label(
+window,
+text="",
+font=("Comic Sans MS", 16),
+bg = "steelblue",
+fg = "lightblue",
+wraplength=900,
+justify="left")
+clue_label.pack(pady=10)
 
-# Gets the definition, meaning, synonym, and antonym of a random word
+# All the functions for code
 
-def get_definition():
-    word_to_search = entry.get()
+def get_word_info(word):
+    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+
     try:
-        response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word_to_search}")
-        data = response.json()
+        data = requests.get(url, timeout=5).json()
+        if isinstance(data, dict) and data.get("title") == "No Definitions Found":
+            return None
+        
         meanings = data[0]["meanings"]
-        definition = meanings[0]["definitions"][0].get("definition", "No definition found.")
+        definition = meanings[0]["definitions"][0].get(
+            "definition", "No definition available.")
+        
+        synonyms = []
+        antonyms = []
+
+        for m in meanings:
+            synonyms.extend(m.get("synonyms", []))
+            antonyms.extend(m.get("antonyms", []))
+            for d in m["definitions"]:
+                synonyms.extend(d.get("synonyms", []))
+                antonyms.extend(d.get("antonyms", []))
+
+        return {
+            "definition": definition,
+            "synonyms": list(set(synonyms))[:8],
+            "antonyms": list(set(antonyms))[:8]
+        }
+    
     except Exception:
         return None
+
+def get_random_word():
+    global current_word, hint_index, current_info
 
 # Button to click to accept input and print the definition
 
