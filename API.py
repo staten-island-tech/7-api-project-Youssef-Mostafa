@@ -167,29 +167,98 @@ def get_word_info(word):
 def get_random_word():
     global current_word, hint_index, current_info
 
-# Button to click to accept input and print the definition
+    hint_index = 0
+    hint_label.config(text="")
+    output_label.config(text="")
+    entry.delete(0, tk.END)
 
-my_button = tk.Button(window, text="Guess Word", font=("Times New Roman", 20),
-bg="lightblue", fg="black", relief="raised",
-command=get_definition)
-my_button.pack(pady=25) 
-
-# Finds a random word on sepearate API
-
-def randomwordfinder():
-    url = "https://random-word-api.herokuapp.com/word"
     try:
-        response2 = requests.get(url)
-        data2 = response2.json()
-        randomword = data2[0]
-        print(randomword)
-    except Exception:
-        print("Error fetching random word:")
-        return None
-randomwordfinder()
+        current_word = requests.get("https://random-word-api.herokuapp.com/word", timeout=5).json()[0].lower()
+        info = get_word_info(current_word)
+        current_info = info if info else {
+            "definition": "No definition available.",
+            "synonyms": [],
+            "antonyms": []
+        }
+
+        syn = current_info["synonyms"][0] if current_info["synonyms"] else "None"
+        ant = current_info["antonyms"][0] if current_info["antonyms"] else "None"
+
+        clue_text = (
+            f"Definiton:\n{current_info['definition']}\n\n"
+            f"Synonym Clue: {syn}\n"
+            f"Antonym Clue: {ant}\n\n"
+            f"Hint: Click 'Reveal Hint' to show letters of the word."
+        )
+        clue_label.config(text=clue_text)
+    
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not load word: {e}")
 
 
+def check_guess():
+    guess = entry.get().strip().lower()
 
+    if not guess:
+        messagebox.showwarning("Input Error", "Enter a guess first!")
+        return
+    
+    if guess == current_word:
+        output_label.config(
+            text=(
+            f"Correct! The word was: {current_word}\n\n"
+                f"Definition: {current_info['definition']}\n\n"
+                f"Synonyms: {', '.join(current_info['synonyms']) or 'None'}\n"
+                f"Antonyms: {', '.join(current_info['antonyms']) or 'None'}"
+            )
+        )
+    else:
+        output_label.config(text="Incorrect! Guess again!")
+
+
+def reveal_hint():
+    global hint_index
+
+    if not current_word:
+        hint_label.config(text="Let a word load first!")
+        return
+    
+    if hint_index >= len(current_word):
+        hint_label.config(text="All letters have been revealed!")
+        return
+    
+    hint_index += 1
+    revealed = current_word[:hint_index] + "*" * (len(current_word) - hint_index)
+    hint_label.config(text=f"Hint: {revealed}")
+
+# Buttons for the games functions
+
+btn_new_word = tk.Button(
+window,
+text="New Random Word",
+font=("Times New Roman", 20),
+bg="orange",
+command=get_random_word
+)
+btn_new_word.pack(pady=5)
+
+btn_reveal = tk.Button(
+    window,
+    text="Reveal Hint",
+    font=("Times New Roman", 20),
+    bg="yellow",
+    command=reveal_hint
+)
+btn_reveal.pack(pady=5)
+
+btn_guess = tk.Button(
+    window,
+    text="Submit Guess",
+    font=("Times New Roman", 20),
+    bg="lightgreen",
+    command=check_guess
+)
+btn_guess.pack(pady=5) 
 
 window.mainloop()
 
