@@ -83,7 +83,7 @@ current_info = {}
 window = tk.Tk()
 window.title("GUESS THAT WORD!!!")
 window.geometry("1000x800")
-window.resizable(False, False)
+window.resizable(True, True)
 window.configure(bg="steelblue")
 
 # Ui and text for game
@@ -237,7 +237,7 @@ btn_new_word = tk.Button(
 window,
 text="New Random Word",
 font=("Times New Roman", 20),
-bg="orange",
+bg="blue",
 command=get_random_word
 )
 btn_new_word.pack(pady=5)
@@ -246,7 +246,7 @@ btn_reveal = tk.Button(
     window,
     text="Reveal Hint",
     font=("Times New Roman", 20),
-    bg="yellow",
+    bg="steelblue",
     command=reveal_hint
 )
 btn_reveal.pack(pady=5)
@@ -255,7 +255,7 @@ btn_guess = tk.Button(
     window,
     text="Submit Guess",
     font=("Times New Roman", 20),
-    bg="lightgreen",
+    bg="lightblue",
     command=check_guess
 )
 btn_guess.pack(pady=5) 
